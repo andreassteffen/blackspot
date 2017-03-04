@@ -1,30 +1,33 @@
 import React, { Component } from 'react';
 import XYAxis from './XYAxis';
+import ExpressionCircle from './ExpressionCircle';
 
-import {scaleBand} from "d3-scale";
+import {scaleBand, scaleLinear} from "d3-scale";
 
 
 const yScale = (props) => {
-  return scaleBand().domain(props.data.cancer_study_id).range([props.height - props.padding, props.padding]);
+  return scaleBand().domain(props.data.cohort).range([props.height - props.padding, props.padding]);
 };
 
 const xScale = (props) => {
   let x = scaleBand()
-    .domain(props.data.symbol)
+    .domain(props.data.gene)
     .range([props.padding, props.width - props.padding])
-  console.log(x('lung'))
+  
   return x
 };
 
 
-
+const circleScale = (props) => {
+  return scaleLinear().domain([props.data.min_val,props.data.max_val]).range([1,10]);
+};
 
 const Blackspot = (props) => {
-    const scales = { xScale: xScale(props), yScale: yScale(props) };
-
+    const scales = { xScale: xScale(props), yScale: yScale(props), circleScale: circleScale(props) };
   return (
 			<svg width={props.width} height={props.height}>
 				<XYAxis {...props} {...scales}/>
+        {props.data.expression.map((expr) => <ExpressionCircle data={expr}  {...scales} />)}
 			</svg>
           )
 }

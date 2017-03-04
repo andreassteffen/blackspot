@@ -21,7 +21,7 @@ export default class Axis extends React.Component {
             .style("text-anchor", "end")
             .attr("dx", "-2em")
             .attr("dy", "-0.2em")
-            .style("font-size",15)
+            .style("font-size",20)
             .attr("transform", function(d) {
                 return "rotate(-90)" 
                 });
@@ -29,7 +29,7 @@ export default class Axis extends React.Component {
     }
     else{
       axis = axisLeft().scale(this.props.scale);
-      select(node).call(axis).selectAll("text").style("font-size",15); 
+      select(node).call(axis).selectAll("text").style("font-size",20); 
     }
     console.log("Axis", axis)
 
